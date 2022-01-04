@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
-import pyautogui
 import PIL
 
+def main():
+    #trol
+
 if __name__ == '__main__':
-    print('')
+    main()
