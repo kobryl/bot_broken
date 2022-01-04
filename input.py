@@ -1,8 +1,8 @@
 import pyautogui
 from time import sleep
 
-leftPressed = False;
-rightPressed = False;
+leftPressed = False
+rightPressed = False
 
 # todo: komentarz
 def initWindow():
