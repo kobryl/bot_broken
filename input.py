@@ -1,27 +1,32 @@
 import pyautogui
 from time import sleep
+from time import time
 
-movingLeft = False
-ovingRight = False
+movingLeft = False      # todo: usunąć niepotrzebne
+movingRight = False
 fps = 50
 interval = 1 / fps
+checkFrequency = 8      # co który tick
 speed = 8
-pixelsPerSecond = fps * speed
 
 pyautogui.PAUSE = 0
 
+
 # todo: komentarz
 def initWindow():
-    focusTimer(5)
+    focusTimer(2)    # todo: zmiana wartości
+
     # fullscreen
     pyautogui.keyDown('f11')
     pyautogui.keyUp('f11')
+
     # reset zoom
     pyautogui.keyDown('ctrl')
     pyautogui.keyDown('0')
     pyautogui.keyUp('0')
     pyautogui.keyUp('ctrl')
     sleep(1.5)
+
     # refresh
     pyautogui.keyDown('f5')
     pyautogui.keyUp('f5')
@@ -42,15 +47,32 @@ def shoot():
     pyautogui.keyUp('space')
 
 
-# Przesuwa gracza o 'x' pikseli w lewo, gdzie x to wielokrotność prędkości gracza, czyli 8.
-def left(x):
-    pyautogui.keyDown('left')
-    sleep(x / pixelsPerSecond)
-    pyautogui.keyUp('left')
+def interruptMove():
+    return False
 
 
-# Przesuwa gracza o 'x' pikseli w prawo, gdzie x to wielokrotność prędkości gracza, czyli 8.
-def right(x):
-    pyautogui.keyDown('right')
-    sleep(x / pixelsPerSecond)
-    pyautogui.keyUp('right')
+# todo: komentarz
+def move(x, direction):
+    pyautogui.keyDown(direction)
+
+    tickCount = x // speed
+    if tickCount >= checkFrequency:
+        checkCount = tickCount // checkFrequency
+        timeDiff = 0
+
+        for tick in range(0, checkCount - 1):
+            if interruptMove():
+                print('interrupt')
+                return
+            startTime = time()
+            expectedTime = interval * checkFrequency
+            sleep((interval * checkFrequency) - timeDiff)
+            actualTime = time() - startTime
+            timeDiff = actualTime - expectedTime
+
+        offsetTime = (interval * ((tickCount % checkFrequency) + checkFrequency)) - timeDiff
+        sleep(offsetTime)
+    else:
+        sleep(interval * tickCount)
+
+    pyautogui.keyUp(direction)
