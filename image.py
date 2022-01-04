@@ -19,20 +19,30 @@ def locateCorners():
         return None
 
 
-def locatePlayer():
-    playerBox = None
-    playerWhiteBox = pyautogui.locateOnScreen('images/player.png')
-    playerRedBox = pyautogui.locateOnScreen('images/player_invincible.png')
+def locatePlayer(topLeft, bottomRight):
+    try:
+        playerBox = None
+        playerRegion = (topLeft[0], bottomRight[1] - 25, bottomRight[0] - topLeft[0], 25)
+        playerWhiteBox = pyautogui.locateOnScreen('images/player.png', region=playerRegion)
+        playerRedBox = pyautogui.locateOnScreen('images/player_invincible.png', region=playerRegion)
 
-    if playerRedBox is not None:
-        playerBox = playerRedBox
-    elif playerWhiteBox is not None:
-        playerBox = playerWhiteBox
-    else:
-        return playerBox
+        if playerRedBox is not None:
+            playerBox = playerRedBox
+        elif playerWhiteBox is not None:
+            playerBox = playerWhiteBox
+        else:
+            return playerBox
 
-    x1 = playerBox[0]
-    x2 = x1 + playerBox[2]
+        return pyautogui.center(playerBox).x
+    except TypeError:
+        return None
 
-    center = (x1 + x2) / 2
-    return center
+'''
+def locateEnemies():
+
+
+
+def locateEnemyBullets():
+
+
+'''
