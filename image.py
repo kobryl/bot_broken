@@ -22,9 +22,15 @@ def locateCorners():
 def locatePlayer(topLeft, bottomRight):
     try:
         playerBox = None
-        playerRegion = (topLeft[0], bottomRight[1] - 27, bottomRight[0] - topLeft[0] + 2, 30)
+        # playerRegion = (8, 633, 961, 30) # 1920:1080 100%
+        playerRegion = (topLeft[0], bottomRight[1] - 27, bottomRight[0] - topLeft[0] + 2, 28)
+        print(playerRegion)
         playerWhiteBox = pyautogui.locateOnScreen('images/player.png', region=playerRegion)
         playerRedBox = pyautogui.locateOnScreen('images/player_invincible.png', region=playerRegion)
+
+        if playerRedBox is None and playerWhiteBox is None:
+            playerWhiteBox = pyautogui.locateOnScreen('images/player_corner.png', region=playerRegion)
+            playerRedBox = pyautogui.locateOnScreen('images/player_invincible_corner.png', region=playerRegion)
 
         if playerRedBox is not None:
             playerBox = playerRedBox
@@ -32,7 +38,7 @@ def locatePlayer(topLeft, bottomRight):
             playerBox = playerWhiteBox
         else:
             return playerBox
-
+        print(playerBox)
         return pyautogui.center(playerBox).x
     except TypeError:
         return None
