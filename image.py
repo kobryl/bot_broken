@@ -17,17 +17,17 @@ def locateCorners():
 def locatePlayer():
     playerBox = None
     playerWhiteBox = pyautogui.locateOnScreen('images/player.png')
-    playerRedBox = pyautogui.locateOnScreen('images/plyer_invincible.png')
+    playerRedBox = pyautogui.locateOnScreen('images/player_invincible.png')
     if playerRedBox is not None:
         playerBox = playerRedBox
     elif playerWhiteBox is not None:
         playerBox = playerWhiteBox
     else:
         return playerBox
-    x1 = playerBox['left']
-    y1 = playerBox['top']
-    x2 = x1 + playerBox['width']
-    y2 = y1 + playerBox['height']
+    x1 = playerBox[0]
+    y1 = playerBox[1]
+    x2 = x1 + playerBox[2]
+    y2 = y1 + playerBox[3]
 
-    center = (x1 + x2) / 2, (y1 + y2) / 2
+    center = (x1 + x2) / 2
     return center
