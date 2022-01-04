@@ -1,14 +1,20 @@
 import pyautogui
 from time import sleep
 
-movingLeft = False
-movingRight = False
-pixelsPerSec = 448
+import image
 
+movingLeft = False
+ovingRight = False
+fps = 50
+interval = 1 / fps
+speed = 8
+pixelsPerSecond = fps * speed
+
+pyautogui.PAUSE = 0
 
 # todo: komentarz
 def initWindow():
-    focusTimer(10)
+    focusTimer(5)
     # fullscreen
     pyautogui.keyDown('f11')
     pyautogui.keyUp('f11')
@@ -17,10 +23,11 @@ def initWindow():
     pyautogui.keyDown('0')
     pyautogui.keyUp('0')
     pyautogui.keyUp('ctrl')
-    sleep(2)
+    sleep(1.5)
     # refresh
     pyautogui.keyDown('f5')
     pyautogui.keyUp('f5')
+    sleep(0.3)
 
 
 # Czeka 'n' sekund na przejście użytkownika do okna z grą
@@ -37,21 +44,15 @@ def shoot():
     pyautogui.keyUp('space')
 
 
-# Porusza gracza o x pikseli w lewo
+# Przesuwa gracza o 'x' pikseli w lewo, gdzie x to wielokrotność prędkości gracza, czyli 8.
 def left(x):
-    global movingLeft
     pyautogui.keyDown('left')
-    movingLeft = True
-    sleep(x / pixelsPerSec)
+    sleep(x / pixelsPerSecond)
     pyautogui.keyUp('left')
-    movingLeft = False
 
 
-# Porusza gracza o x pikszeli w prawo
+# Przesuwa gracza o 'x' pikseli w prawo, gdzie x to wielokrotność prędkości gracza, czyli 8.
 def right(x):
-    global movingRight
     pyautogui.keyDown('right')
-    movingRight = True
-    sleep(x / pixelsPerSec)
+    sleep(x / pixelsPerSecond)
     pyautogui.keyUp('right')
-    movingRight = False
