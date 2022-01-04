@@ -3,7 +3,7 @@ from time import sleep
 
 movingLeft = False
 movingRight = False
-pixelsPerSec = 0  # todo: zmiana
+pixelsPerSec = 448
 
 
 # todo: komentarz
@@ -42,7 +42,7 @@ def left(x):
     global movingLeft
     pyautogui.keyDown('left')
     movingLeft = True
-    sleep(1)
+    sleep(x / pixelsPerSec)
     pyautogui.keyUp('left')
     movingLeft = False
 
