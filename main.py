@@ -7,7 +7,8 @@ import image
 
 
 def main():
-    input.initWindow()
+    print(image.locatePlayer())
+
 
 
 
