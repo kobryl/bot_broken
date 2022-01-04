@@ -1,8 +1,6 @@
 import pyautogui
 from time import sleep
 
-import image
-
 movingLeft = False
 ovingRight = False
 fps = 50
