@@ -1,7 +1,12 @@
 import cv2
 import numpy as np
-import pyautogui
 import PIL
 
+import input
+import image
+
+def main():
+    input.initWindow()
+
 if __name__ == '__main__':
-    print('')
+    main()
