@@ -9,11 +9,14 @@ def isGameOver():
 
 
 def locateCorners():
-    tl = pyautogui.locateOnScreen('images/topleft.png')
-    br = pyautogui.locateOnScreen('images/bottomright.png')
-    begin = tl[0]+4, tl[1]+1
-    end = br[0]+12, br[1]+12
-    return begin, end
+    try:
+        tl = pyautogui.locateOnScreen('images/topleft.png')
+        br = pyautogui.locateOnScreen('images/bottomright.png')
+        begin = tl[0]+4, tl[1]+1
+        end = br[0]+12, br[1]+12
+        return begin, end
+    except TypeError:
+        return None
 
 
 def locatePlayer():
