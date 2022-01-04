@@ -6,8 +6,9 @@ from PIL import ImageGrab
 
 pyautogui.FAILSAFE = False
 
+
 def isGameOver():
-    if pyautogui.locateOnScreen('images/gameover.png') is not None:
+    if pyautogui.locateOnScreen('images/gameover.png', confidence=0.8) is not None:
         return True
     else:
         return False
@@ -27,7 +28,7 @@ def locateCorners():
 def locatePlayer(topLeft, bottomRight):
     try:
         playerBox = None
-        #playerRegion = (8, 633, 961, 30) # 1920:1080 100%
+        # playerRegion = (8, 633, 961, 30) # 1920:1080 100%
         playerRegion = (topLeft[0], bottomRight[1] - 27, bottomRight[0] - topLeft[0] + 2, 28)
 
         playerWhiteBox = pyautogui.locateOnScreen('images/player.png', region=playerRegion)
