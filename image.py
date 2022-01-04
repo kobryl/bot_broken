@@ -16,7 +16,7 @@ def locateCorners():
         end = br[0]+12, br[1]+12
         return begin, end
     except TypeError:
-        return None
+        return None, None
 
 
 def locatePlayer(topLeft, bottomRight):
