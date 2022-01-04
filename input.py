@@ -39,13 +39,19 @@ def shoot():
 
 # Porusza gracza o x pikseli w lewo
 def left(x):
+    global movingLeft
     pyautogui.keyDown('left')
-    sleep(x / pixelsPerSec)
+    movingLeft = True
+    sleep(1)
     pyautogui.keyUp('left')
+    movingLeft = False
 
 
 # Porusza gracza o x pikszeli w prawo
 def right(x):
+    global movingRight
     pyautogui.keyDown('right')
+    movingRight = True
     sleep(x / pixelsPerSec)
     pyautogui.keyUp('right')
+    movingRight = False
