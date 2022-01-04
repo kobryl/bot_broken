@@ -1,7 +1,7 @@
-from time import time, sleep
+import cv2
 import numpy as np
-import cv2 as cv
-from PIL import Image
+import pyautogui
+import PIL
 
 if __name__ == '__main__':
     print('')
