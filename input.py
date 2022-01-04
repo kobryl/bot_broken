@@ -53,12 +53,13 @@ def interruptMove():
 
 # todo: komentarz
 def move(x, direction):
-    tickCount = x // speed
     pyautogui.keyDown(direction)
 
+    tickCount = x // speed
     if tickCount >= checkFrequency:
         checkCount = tickCount // checkFrequency
         timeDiff = 0
+
         for tick in range(0, checkCount - 1):
             if interruptMove():
                 print('interrupt')
@@ -68,6 +69,7 @@ def move(x, direction):
             sleep((interval * checkFrequency) - timeDiff)
             actualTime = time() - startTime
             timeDiff = actualTime - expectedTime
+
         offsetTime = (interval * ((tickCount % checkFrequency) + checkFrequency)) - timeDiff
         sleep(offsetTime)
     else:
