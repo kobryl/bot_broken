@@ -1,5 +1,10 @@
-import pyautogui
+from time import sleep
 
+import pyautogui
+import cv2
+from PIL import ImageGrab
+
+pyautogui.FAILSAFE = False
 
 def isGameOver():
     if pyautogui.locateOnScreen('images/gameover.png') is not None:
@@ -22,7 +27,7 @@ def locateCorners():
 def locatePlayer(topLeft, bottomRight):
     try:
         playerBox = None
-        #playerRegion = (8, 633, 961+8, 30+633) # 1920:1080 100%
+        #playerRegion = (8, 633, 961, 30) # 1920:1080 100%
         playerRegion = (topLeft[0], bottomRight[1] - 27, bottomRight[0] - topLeft[0] + 2, 28)
 
         playerWhiteBox = pyautogui.locateOnScreen('images/player.png', region=playerRegion)
@@ -43,16 +48,3 @@ def locatePlayer(topLeft, bottomRight):
     except TypeError:
         return None
 
-'''
-def locateEnemies(topLeft, bottomRight):
-    enemyRegion = (topLeft[0], topLeft[1], bottomRight[0] - topLeft[0] + 2, bottomRight[1] - topLeft[1] - 20)
-    enemies = pyautogui.locateAllOnScreen('images/enemy.png', region=enemyRegion, grayscale=True, confidence=0.8)
-    pyautogui.screenshot('screen.png', region=enemyRegion)
-    for enemy in enemies:
-        print(enemy)
-
-
-def locateEnemyBullets():
-
-
-'''
