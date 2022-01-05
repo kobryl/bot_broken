@@ -102,7 +102,7 @@ def checkSides(direction, playerPos, tl, br):
     radarWidth = 180
     radarHeight = 130
     if direction == 'left':
-        if wallDetection(playerPos, tl, br) == 'left':
+        if wallDetection(playerPos[0], tl, br) == 'left':
             return 0
         if playerPos[0] - 30 - radarWidth < tl[0]:
             regionX = tl[0]
@@ -114,11 +114,11 @@ def checkSides(direction, playerPos, tl, br):
             regionY = playerPos[1] - 110
         region = (regionX, regionY, radarWidth, radarHeight)
     else:
-        if wallDetection(playerPos, tl, br) == 'right':
+        if wallDetection(playerPos[0], tl, br) == 'right':
             return 0
         regionX = playerPos[0] + 28
         if regionX + radarWidth > br[0]:
-            radarWidth = br[0] - (regionX)
+            radarWidth = br[0] - regionX
         else:
             radarWidth = 180
         if playerPos[1] - 110 < tl[1]:
@@ -146,9 +146,9 @@ def checkSides(direction, playerPos, tl, br):
 #   br (x, y): bottom-right corner of the game board
 # Return: 'left' - if the player is touching the left wall, 'right' - if the player is touching the right wall,
 #           False - otherwise
-def wallDetection(playerPos, tl, br):
-    if playerPos[0] - 30 <= tl[0]:
+def wallDetection(playerPosX, tl, br):
+    if playerPosX - 30 <= tl[0]:
         return 'left'
-    elif playerPos[0] + 30 >= br[0]:
+    elif playerPosX + 30 >= br[0]:
         return 'right'
     return False
