@@ -44,7 +44,7 @@ def locatePlayer(topLeft, bottomRight):
 def radar(playerPos, tl, br):
     bulletsx = []
     radarHeight = 310
-    radarWidth = 94
+    radarWidth = 90
 
     if playerPos[0] - radarWidth / 2 < tl[0]:
         regionX = tl[0]
@@ -75,12 +75,12 @@ def checkSides(direction, playerPos, tl, br):
     collision = []
     radarWidth = 180
     radarHeight = 130
-    if direction == 'left:':
+    if direction == 'left':
         if playerPos[0] - 30 - radarWidth < tl[0]:
             regionX = tl[0]
         else:
             regionX = playerPos[0] - 30 - radarWidth
-        if playerPos[1] - 110 > tl[1]:
+        if playerPos[1] - 110 < tl[1]:
             regionY = tl[1]
         else:
             regionY = playerPos[1] - 110
@@ -91,11 +91,12 @@ def checkSides(direction, playerPos, tl, br):
             radarWidth = br[0] - (playerPos[0] + 30)
         else:
             radarWidth = 180
-        if playerPos[1] - 110 > tl[1]:
+        if playerPos[1] - 110 < tl[1]:
             regionY = tl[1]
         else:
             regionY = playerPos[1] - 110
         region = (regionX, regionY, radarWidth, radarHeight)
+    print(region)
     collision.append(radarWidth)
     scr = pyautogui.screenshot('sceren2.png', region=region)
     for y in range(radarHeight):
