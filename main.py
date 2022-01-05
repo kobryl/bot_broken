@@ -49,7 +49,7 @@ def main():
 #   playerPos (x, y): x - player's center x coordinate, y - player's height
 #   tl: top-left corner coordinates
 #   br: bottom-right corner coordinates
-# Return: direction in which move should be made ('left' or 'right')
+# Return: direction in which move should be made ('left' or 'right or 'safe' for both)
 def determineDodgeDirection(bullets, playerPos, tl, br):
     leftSafe = image.checkSides('left', playerPos, tl, br)
     rightSafe = image.checkSides('right', playerPos, tl, br)
@@ -82,6 +82,12 @@ def determineDodgeLength(bullets, playerPos, direction):
         return rightPlayerBoundary - dangerBounds[0] - moveOffset + 4
 
 
+# Function calculates longest safe path in each direction
+# Parameters:
+#   playerPos (x, y): x - player's center x coordinate, y - player's height
+#   tl: top-left corner's coordinates
+#   br: bottom-right corner's coordinates
+# Return: tuple of better direction and path length
 def getLongestSafe(playerPos, tl, br):
     leftSafe = image.checkSides('left', playerPos, tl, br)
     rightSafe = image.checkSides('right', playerPos, tl, br)
