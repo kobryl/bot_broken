@@ -70,8 +70,8 @@ def radar(playerPos, tl, br):
     return bulletsx
 
 
-# Sprawdza, czy bezpiecznie jest się przemieścić 'x' pikseli w bok z pozycji 'playerPos'
-def checkSides(x, playerPos, tl, br):
+# Sprawdza, o ile można się przemieścić w danym kierunku
+def checkSides(direction, playerPos, tl, br):
     safe = True
     x1 = playerPos[0] - 30
     regionl = (playerPos[0] - 30 - 180, playerPos[1] - 110, 180, 130)
