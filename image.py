@@ -71,7 +71,7 @@ def radar(playerPos):
     for y in range(300):
         for x in range(80):
             pix = scr.getpixel((x, y))
-            if not (pix[0] == pix[1] and pix[0] == pix[2]):
+            if not (pix[0] == pix[1] and pix[0] == pix[2]) and scr.getpixel(x + 7, y) != pix:
                 bulletsx.append(playerPos[0] - 40 + x)
                 bulletsx = list(set(bulletsx))
     return bulletsx
