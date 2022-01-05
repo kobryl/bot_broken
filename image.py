@@ -125,7 +125,8 @@ def checkSides(direction, playerPos, tl, br):
         for x in range(radarWidth):
             pix = scr.getpixel((x, y))
             if not (pix[0] == pix[1] and pix[0] == pix[2]):
-                collision.append(abs(playerPos[0] - x) - 1)
+                collision.append(abs(radarWidth - x) - 1)
+                print(collision)
     return min(collision)
 
 
