@@ -66,12 +66,12 @@ def locatePlayer(topLeft, bottomRight):
 
 def radar(playerPos):
     bulletsx = []
-    colors = [(255, 255, 255), (0, 0, 0), (20, 20, 20), (21, 21, 21)]
     region = (playerPos[0] - 40, playerPos[1] - 300, 80, 300)
     scr = pyautogui.screenshot('sceren.png', region=region)
     for y in range(300):
         for x in range(80):
-            if scr.getpixel((x, y)) not in colors:
+            pix = scr.getpixel((x, y))
+            if not (pix[0] == pix[1] and pix[0] == pix[2]):
                 bulletsx.append(playerPos[0] - 40 + x)
                 bulletsx = list(set(bulletsx))
     return bulletsx
