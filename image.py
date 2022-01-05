@@ -83,8 +83,9 @@ def radar(playerPos):
     return bulletsx
 
 
-def checkSides(playerPos, move, direction):
+def checkSides(playerPos):
     safe = True
     x1 = playerPos[0] - 30
-    region = ()
+    regionl = (playerPos[0] - 30 - 180, playerPos[1] - 110, 180, 130)
+    regionr = (playerPos[0] + 30, playerPos[1] - 110, 180, 130)
     return safe
