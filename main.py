@@ -10,8 +10,7 @@ def main():
     pyautogui.FAILSAFE = False
 
     tl, br = image.locateCorners()
-    interval = 0.08
-
+    interval  = 0.08
     pyautogui.keyDown('space')
 
     while not image.isGameOver():
@@ -34,11 +33,18 @@ def main():
         sleep(interval)
 
     pyautogui.keyUp('space')
-
+    print(image.checkSides('right', (488, br[1] - 20), tl, br))
     print('Koniec programu')
     return
 
 
+# Function determines in which direction the player should escape
+# Parameters:
+#   bullets - list of detected bullets' x coordinates
+#   playerPos (x, y): x - player's center x coordinate, y - player's height
+#   tl: top-left corner coordinates
+#   br: bottom-right corner coordinates
+# Return: direction in which move should be made ('left' or 'right')
 def determineDodgeDirection(bullets, playerPos, tl, br):
     leftSafe = image.checkSides('left', playerPos, tl, br)
     rightSafe = image.checkSides('right', playerPos, tl, br)
@@ -63,6 +69,12 @@ def determineDodgeDirection(bullets, playerPos, tl, br):
             return 'left'
 
 
+# Function determines how long should move be to dodge the bullets
+# Parameters:
+#   bullets: list of bullets' x coordinates
+#   playerPos (x, y): x - player's center x coordinate, y - player's height
+#   direction - 'left' or 'right'
+# Return: Lengh of needed dodge
 def determineDodgeLength(bullets, playerPos, direction):
     radarOffset = 15
     moveOffset = 8
