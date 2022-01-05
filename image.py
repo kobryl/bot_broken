@@ -133,15 +133,15 @@ def checkSides(direction, playerPos, tl, br):
             pix = scr.getpixel((x, y))
             if not (pix[0] == pix[1] and pix[0] == pix[2]):
                 if direction == 'left':
-                    collision.append(abs(radarWidth - x) - 1)
+                    collision.append(max(abs(radarWidth - x) - 1), 0)
                 else:
-                    collision.append(x - 1)
+                    collision.append(max(x - 1, 0))
     return min(collision)
 
 
 # Function checks if the player is touching a wall
 # Parameters:
-#   playerPos (x, y): x - center of the player, y - height of the player;
+#   playerPosX: center of the player;
 #   tl (x, y): top-left corner of the game board
 #   br (x, y): bottom-right corner of the game board
 # Return: 'left' - if the player is touching the left wall, 'right' - if the player is touching the right wall,
