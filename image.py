@@ -58,32 +58,36 @@ def locatePlayer(topLeft, bottomRight):
 #   br (x, y): bottom-right corner of the game board
 # Return: List of x coordinates of enemy projectiles
 def radar(playerPos, tl, br):
-    bulletsx = []
-    radarHeight = 310
-    radarWidth = 90
+    try:
+        bulletsx = []
+        radarHeight = 310
+        radarWidth = 90
 
-    if playerPos[0] - radarWidth / 2 < tl[0]:
-        regionX = tl[0]
-    else:
-        regionX = playerPos[0] - radarWidth / 2
-    if playerPos[1] - radarHeight < tl[1]:
-        regionY = tl[1]
-    else:
-        regionY = playerPos[1] - radarHeight
+        if playerPos[0] - radarWidth / 2 < tl[0]:
+            regionX = tl[0]
+        else:
+            regionX = playerPos[0] - radarWidth / 2
+        if playerPos[1] - radarHeight < tl[1]:
+            regionY = tl[1]
+        else:
+            regionY = playerPos[1] - radarHeight
 
-    region = (regionX, regionY, radarWidth, radarHeight)
-    scr = pyautogui.screenshot(region=region)
+        region = (regionX, regionY, radarWidth, radarHeight)
+        scr = pyautogui.screenshot(region=region)
 
-    for y in range(radarHeight):
-        for x in range(radarWidth):
-            pix = scr.getpixel((x, y))
-            if not (pix[0] == pix[1] and pix[0] == pix[2]):
-                if not (x + 7 >= radarWidth):
-                    if not (scr.getpixel((x + 7, y)) == pix):
-                        bulletsx.append(playerPos[0] - radarWidth / 2 + x)
-                        bulletsx = list(set(bulletsx))
+        for y in range(radarHeight):
+            for x in range(radarWidth):
+                pix = scr.getpixel((x, y))
+                if not (pix[0] == pix[1] and pix[0] == pix[2]):
+                    if not (x + 7 >= radarWidth):
+                        if not (scr.getpixel((x + 7, y)) == pix):
+                            bulletsx.append(playerPos[0] - radarWidth / 2 + x)
+                            bulletsx = list(set(bulletsx))
 
-    return bulletsx
+        return bulletsx
+
+    except TypeError:
+        return None
 
 
 # Function calculates maximum safe move value in given direction
