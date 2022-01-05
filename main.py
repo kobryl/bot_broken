@@ -6,11 +6,11 @@ import image
 
 
 def main():
-    # input.initWindow(10)        #todo: uncomment
+    input.initWindow()
     pyautogui.FAILSAFE = False
 
     tl, br = image.locateCorners()
-    interval = 0.1
+    interval = 0.06
 
     pyautogui.keyDown('space')
 
@@ -28,6 +28,11 @@ def main():
                 length = determineDodgeLength(bullets, playerPos, direction)
             print(playerPos, length, direction, bullets)
             input.move(length, direction)
+            wall = image.wallDetection(playerPos, tl, br)
+            if wall == 'left':
+                input.move(image.checkSides('right', (playerPos, y), tl, br), 'right')
+            elif wall == 'right':
+                input.move(image.checkSides('left', (playerPos, y), tl, br), 'left')
         sleep(interval)
 
     pyautogui.keyUp('space')
@@ -41,7 +46,7 @@ def determineDodgeDirection(bullets, playerPos, tl, br):
     rightSafe = image.checkSides('right', playerPos, tl, br)
     leftRequired = determineDodgeLength(bullets, playerPos[0], 'left')
     rightRequired = determineDodgeLength(bullets, playerPos[0], 'right')
-    #print(leftSafe, rightSafe, leftRequired, rightRequired)
+    print(leftSafe, rightSafe, leftRequired, rightRequired)
     if leftSafe >= leftRequired:
         return 'left'
     elif rightSafe >= rightRequired:
@@ -53,7 +58,7 @@ def determineDodgeDirection(bullets, playerPos, tl, br):
 def determineDodgeLength(bullets, playerPos, direction):
     radarOffset = 15
     moveOffset = 8
-    dangerBounds = (min(bullets), max(bullets))
+    dangerBounds = (min(bullets) + 4, max(bullets))
     leftPlayerBoundary = playerPos - 30 - radarOffset
     rightPlayerBoundary = playerPos + 30 + radarOffset + 8
 
