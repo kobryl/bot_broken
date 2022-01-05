@@ -48,18 +48,6 @@ def determineDodgeDirection(bullets, playerPos, tl, br):
         return 'right'
     else:
         return 'safe'
-        '''leftBullets = 0
-        rightBullets = 0
-        for bullet in bullets:
-            if bullet <= playerPos[0]:
-                leftBullets += 1
-            else:
-                rightBullets += 1
-        if leftBullets > rightBullets:
-            return 'right'
-        else:
-            return 'left'
-            '''
 
 
 def determineDodgeLength(bullets, playerPos, direction):
@@ -82,6 +70,7 @@ def getLongestSafe(playerPos, tl, br):
         return 'right', rightSafe
     else:
         return 'left', leftSafe
+
 
 if __name__ == '__main__':
     main()
