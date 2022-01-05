@@ -3,6 +3,8 @@ import pyautogui
 pyautogui.FAILSAFE = False
 
 
+# Function detects game over screen
+# Return: True - if game over screen is visible, False - otherwise
 def isGameOver():
     if pyautogui.locateOnScreen('images/gameover.png', confidence=0.8) is not None:
         return True
@@ -10,13 +12,16 @@ def isGameOver():
         return False
 
 
+# Function seeks for the game board corners
+# Return: Top-left and bottom-right corners' coordinates or None if not found
 def locateCorners():
     try:
         tl = pyautogui.locateOnScreen('images/topleft.png')
         br = pyautogui.locateOnScreen('images/bottomright.png')
 
-        begin = tl[0]+4, tl[1]+1
-        end = br[0]+36, br[1]+37
+        # Add images' offset to the coordinates
+        begin = tl[0] + 4, tl[1] + 1
+        end = br[0] + 36, br[1] + 37
 
         return begin, end
 
@@ -24,6 +29,11 @@ def locateCorners():
         return None, None
 
 
+# Function seeks for the player's position on the game board
+# Parameters:
+#   topLeft (x, y): top-left corner of the game board
+#   bottomRight (x, y): bottom-rightt corner of the game board
+# Return: Player's center x coordinate on the game board or None if corners were None
 def locatePlayer(topLeft, bottomRight):
     try:
         playerRegion = (topLeft[0], bottomRight[1] - 5, bottomRight[0] - topLeft[0] + 1, 1)
@@ -41,6 +51,12 @@ def locatePlayer(topLeft, bottomRight):
         return None
 
 
+# Function detects any projectiles above the player
+# Parameters:
+#   playerPos (x, y): x - center of the player, y - height of the player;
+#   tl (x, y): top-left corner of the game board
+#   br (x, y): bottom-right corner of the game board
+# Return: List of x coordinates of enemy projectiles
 def radar(playerPos, tl, br):
     bulletsx = []
     radarHeight = 310
@@ -70,7 +86,13 @@ def radar(playerPos, tl, br):
     return bulletsx
 
 
-# Sprawdza, o ile można się przemieścić w danym kierunku
+# Function calculates maximum safe move value in given direction
+# Parameters:
+#   direction: 'left' or 'right'
+#   playerPos (x, y): x - center of the player, y - height of the player;
+#   tl (x, y): top-left corner of the game board
+#   br (x, y): bottom-right corner of the game board
+# Return: Maximum safe move value in given direction
 def checkSides(direction, playerPos, tl, br):
     collision = []
     radarWidth = 180
@@ -107,7 +129,13 @@ def checkSides(direction, playerPos, tl, br):
     return min(collision)
 
 
+# Function checks if the player is touching a wall
+# Parameters:
+#   playerPos (x, y): x - center of the player, y - height of the player;
+#   tl (x, y): top-left corner of the game board
+#   br (x, y): bottom-right corner of the game board
+# Return: True - if the player is touching a wall, False - otherwise
 def wallDetection(playerPos, tl, br):
-    if playerPos[0] - 30 <= tl.x or playerPos[0] + 30 >= br.x:
+    if playerPos[0] - 30 <= tl[0] or playerPos[0] + 30 >= br[0]:
         return True
     return False
