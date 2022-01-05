@@ -133,7 +133,7 @@ def checkSides(direction, playerPos, tl, br):
             pix = scr.getpixel((x, y))
             if not (pix[0] == pix[1] and pix[0] == pix[2]):
                 if direction == 'left':
-                    collision.append(max(abs(radarWidth - x) - 1), 0)
+                    collision.append(max(abs(radarWidth - x) - 1, 0))
                 else:
                     collision.append(max(x - 1, 0))
     return min(collision)
