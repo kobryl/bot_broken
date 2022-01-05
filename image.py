@@ -98,6 +98,8 @@ def checkSides(direction, playerPos, tl, br):
     radarWidth = 180
     radarHeight = 130
     if direction == 'left':
+        if wallDetection(playerPos, tl, br) == 'left':
+            return 0
         if playerPos[0] - 30 - radarWidth < tl[0]:
             regionX = tl[0]
         else:
@@ -108,9 +110,11 @@ def checkSides(direction, playerPos, tl, br):
             regionY = playerPos[1] - 110
         region = (regionX, regionY, radarWidth, radarHeight)
     else:
-        regionX = playerPos[0] + 30
-        if playerPos[0] + 30 + radarWidth > br[0]:
-            radarWidth = br[0] - (playerPos[0] + 30)
+        if wallDetection(playerPos, tl, br) == 'right':
+            return 0
+        regionX = playerPos[0] + 28
+        if regionX + radarWidth > br[0]:
+            radarWidth = br[0] - (regionX)
         else:
             radarWidth = 180
         if playerPos[1] - 110 < tl[1]:
@@ -124,7 +128,10 @@ def checkSides(direction, playerPos, tl, br):
         for x in range(radarWidth):
             pix = scr.getpixel((x, y))
             if not (pix[0] == pix[1] and pix[0] == pix[2]):
-                collision.append(abs(radarWidth - x) - 1)
+                if direction == 'left':
+                    collision.append(abs(radarWidth - x) - 1)
+                else:
+                    collision.append(x - 1)
     return min(collision)
 
 
@@ -133,8 +140,11 @@ def checkSides(direction, playerPos, tl, br):
 #   playerPos (x, y): x - center of the player, y - height of the player;
 #   tl (x, y): top-left corner of the game board
 #   br (x, y): bottom-right corner of the game board
-# Return: True - if the player is touching a wall, False - otherwise
+# Return: 'left' - if the player is touching the left wall, 'right' - if the player is touching the right wall,
+#           False - otherwise
 def wallDetection(playerPos, tl, br):
-    if playerPos[0] - 30 <= tl[0] or playerPos[0] + 30 >= br[0]:
-        return True
+    if playerPos[0] - 30 <= tl[0]:
+        return 'left'
+    elif playerPos[0] + 30 >= br[0]:
+        return 'right'
     return False
