@@ -32,7 +32,6 @@ def locatePlayer(topLeft, bottomRight):
         img = img.convert('L')
         width = bottomRight[0] + 1
         for x in range(0, width):
-            print(x)
             if img.getpixel((x, 0)) >= 40:
                 return x + 30
 
