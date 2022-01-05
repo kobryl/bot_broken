@@ -30,11 +30,11 @@ def main():
             wall = image.wallDetection(playerPos, tl, br)
             if wall == 'left':
                 rightSafe = image.checkSides('right', (playerPos, y), tl, br)
-                if rightSafe > 30:
+                if rightSafe >= 64:
                     input.move(rightSafe, 'right')
             elif wall == 'right':
                 leftSafe = image.checkSides('left', (playerPos, y), tl, br)
-                if leftSafe > 30:
+                if leftSafe >= 64:
                     input.move(leftSafe, 'left')
         sleep(interval)
 
@@ -67,7 +67,7 @@ def determineDodgeLength(bullets, playerPos, direction):
     if direction == 'right':
         return dangerBounds[1] - leftPlayerBoundary + moveOffset
     else:
-        return rightPlayerBoundary - dangerBounds[0] - moveOffset + 8
+        return rightPlayerBoundary - dangerBounds[0] - moveOffset + 4
 
 
 def getLongestSafe(playerPos, tl, br):

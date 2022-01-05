@@ -100,7 +100,7 @@ def radar(playerPos, tl, br):
 def checkSides(direction, playerPos, tl, br):
     collision = []
     radarWidth = 200
-    radarHeight = 170
+    radarHeight = 200
     radarOffset = 15
     if direction == 'left':
         radarWidth -= radarOffset
