@@ -26,7 +26,7 @@ def locateCorners():
 
 
 def locatePlayer(topLeft, bottomRight):
-    #try:
+    try:
         playerRegion = (topLeft[0], bottomRight[1] - 5, bottomRight[0] - topLeft[0] + 1, 1)
         img = pyautogui.screenshot(region=playerRegion)
         img = img.convert('L')
@@ -36,8 +36,8 @@ def locatePlayer(topLeft, bottomRight):
             if img.getpixel((x, 0)) >= 40:
                 return x + 30
 
-    #except TypeError:
-        #return None
+    except TypeError:
+        return None
 
 
 '''def locatePlayer(topLeft, bottomRight):
