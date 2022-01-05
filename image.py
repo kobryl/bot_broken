@@ -97,7 +97,7 @@ def checkSides(direction, playerPos, tl, br):
     collision = []
     radarWidth = 180
     radarHeight = 130
-    if direction == 'left:':
+    if direction == 'left':
         if playerPos[0] - 30 - radarWidth < tl[0]:
             regionX = tl[0]
         else:
