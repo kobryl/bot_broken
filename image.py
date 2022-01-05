@@ -72,7 +72,7 @@ def radar(playerPos, tl, br):
         regionY = playerPos[1] - radarHeight
 
     region = (regionX, regionY, radarWidth, radarHeight)
-    scr = pyautogui.screenshot('sceren.png', region=region)
+    scr = pyautogui.screenshot(region=region)
 
     for y in range(radarHeight):
         for x in range(radarWidth):
@@ -118,15 +118,13 @@ def checkSides(direction, playerPos, tl, br):
         else:
             regionY = playerPos[1] - 110
         region = (regionX, regionY, radarWidth, radarHeight)
-    print(region)
     collision.append(radarWidth)
-    scr = pyautogui.screenshot('sceren2.png', region=region)
+    scr = pyautogui.screenshot(region=region)
     for y in range(radarHeight):
         for x in range(radarWidth):
             pix = scr.getpixel((x, y))
             if not (pix[0] == pix[1] and pix[0] == pix[2]):
                 collision.append(abs(radarWidth - x) - 1)
-                print(collision)
     return min(collision)
 
 
