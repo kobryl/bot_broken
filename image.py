@@ -101,7 +101,9 @@ def checkSides(direction, playerPos, tl, br):
     collision = []
     radarWidth = 200
     radarHeight = 170
+    radarOffset = 15
     if direction == 'left':
+        radarWidth -= radarOffset
         if wallDetection(playerPos[0], tl, br) == 'left':
             return 0
         if playerPos[0] - 30 - radarWidth < tl[0]:
@@ -114,9 +116,10 @@ def checkSides(direction, playerPos, tl, br):
             regionY = playerPos[1] - 110
         region = (regionX, regionY, radarWidth, radarHeight)
     else:
+        radarWidth += radarOffset
         if wallDetection(playerPos[0], tl, br) == 'right':
             return 0
-        regionX = playerPos[0] + 28
+        regionX = playerPos[0] + 30
         if regionX + radarWidth > br[0]:
             radarWidth = br[0] - regionX
         if playerPos[1] - 110 < tl[1]:

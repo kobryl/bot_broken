@@ -10,7 +10,7 @@ def main():
     pyautogui.FAILSAFE = False
 
     tl, br = image.locateCorners()
-    interval = 0.08
+    interval = 0.1
 
     pyautogui.keyDown('space')
 
@@ -18,19 +18,16 @@ def main():
         playerPos = image.locatePlayer(tl, br)
         y = br[1] - 20
         bullets = image.radar((playerPos, y), tl, br)
-        if len(bullets) > 0:
+        if len(bullets) > 1:
             direction = determineDodgeDirection(bullets, (playerPos, y), tl, br)
-            length = determineDodgeLength(bullets, playerPos, direction)
-            #print(playerPos, length, direction, bullets)
+            if direction == 'safe':
+                safe = getLongestSafe((playerPos, y), tl, br)
+                direction = safe[0]
+                length = safe[1]
+            else:
+                length = determineDodgeLength(bullets, playerPos, direction)
+            print(playerPos, length, direction, bullets)
             input.move(length, direction)
-        else:
-            wall = image.wallDetection(playerPos, tl, br)
-            if wall == 'left':
-                leftSafe = image.checkSides('left', (playerPos, y), tl, br)
-                input.move(leftSafe, 'left')
-            elif wall == 'right':
-                rightSafe = image.checkSides('left', (playerPos, y), tl, br)
-                input.move(rightSafe, 'left')
         sleep(interval)
 
     pyautogui.keyUp('space')
@@ -42,15 +39,16 @@ def main():
 def determineDodgeDirection(bullets, playerPos, tl, br):
     leftSafe = image.checkSides('left', playerPos, tl, br)
     rightSafe = image.checkSides('right', playerPos, tl, br)
-    print(leftSafe, rightSafe)
     leftRequired = determineDodgeLength(bullets, playerPos[0], 'left')
     rightRequired = determineDodgeLength(bullets, playerPos[0], 'right')
+    #print(leftSafe, rightSafe, leftRequired, rightRequired)
     if leftSafe >= leftRequired:
         return 'left'
     elif rightSafe >= rightRequired:
         return 'right'
     else:
-        leftBullets = 0
+        return 'safe'
+        '''leftBullets = 0
         rightBullets = 0
         for bullet in bullets:
             if bullet <= playerPos[0]:
@@ -61,6 +59,7 @@ def determineDodgeDirection(bullets, playerPos, tl, br):
             return 'right'
         else:
             return 'left'
+            '''
 
 
 def determineDodgeLength(bullets, playerPos, direction):
@@ -75,6 +74,14 @@ def determineDodgeLength(bullets, playerPos, direction):
     else:
         return rightPlayerBoundary - dangerBounds[0] - moveOffset + 8
 
+
+def getLongestSafe(playerPos, tl, br):
+    leftSafe = image.checkSides('left', playerPos, tl, br)
+    rightSafe = image.checkSides('right', playerPos, tl, br)
+    if rightSafe > leftSafe:
+        return 'right', rightSafe
+    else:
+        return 'left', leftSafe
 
 if __name__ == '__main__':
     main()
