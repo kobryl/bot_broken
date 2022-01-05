@@ -1,20 +1,16 @@
 import pyautogui
 from time import sleep
-from time import time
 
-movingLeft = False      # todo: usunąć niepotrzebne
-movingRight = False
 fps = 50
 interval = 1 / fps
-checkFrequency = 8      # co który tick
 speed = 8
 
 pyautogui.PAUSE = 0
 
 
-# todo: komentarz
+# Przygotowuje okno do operacji programu - pełny ekran, reset przybliżenia oraz odświeżenie
 def initWindow():
-    focusTimer(2)    # todo: zmiana wartości
+    focusTimer(5)
 
     # fullscreen
     pyautogui.keyDown('f11')
@@ -41,7 +37,7 @@ def focusTimer(n):
         sleep(1)
 
 
-# todo: komentarz
+# Rusza graczem o 'x' pikseli w podanym kierunku ('left'/'right')
 def move(x, direction):
     pyautogui.keyDown(direction)
     sleep(interval * (x / speed))

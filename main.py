@@ -1,30 +1,27 @@
-import cv2
-import numpy as np
-import PIL
-from time import sleep, time
+from time import sleep
 import pyautogui
-# todo: wywalić niepotrzebne
 
 import input
 import image
 
 
 def main():
-    input.initWindow()
+    # input.initWindow()        #todo: uncomment
     pyautogui.FAILSAFE = False
 
     tl, br = image.locateCorners()
-    interval = 0.1
+    interval = 0.15
 
     pyautogui.keyDown('space')
 
     while not image.isGameOver():
         playerPos = image.locatePlayer(tl, br)
         y = br[1] - 21
-        bullets = image.radar((playerPos, y))
+        bullets = image.radar((playerPos, y), tl, br)
         if len(bullets) > 0:
             direction = determineDodgeDirection(bullets, playerPos)
             length = determineDodgeLength(bullets, playerPos, direction)
+            #print(playerPos, length, direction, bullets)
             input.move(length, direction)
         sleep(interval)
 
@@ -49,11 +46,12 @@ def determineDodgeDirection(bullets, playerPos):
 
 
 def determineDodgeLength(bullets, playerPos, direction):
+    radarOffset = 15
     dangerBounds = (min(bullets), max(bullets))
-    leftPlayerBoundary = playerPos - 30
-    rightPlayerBoundary = playerPos + 30
+    leftPlayerBoundary = playerPos - 30 - radarOffset
+    rightPlayerBoundary = playerPos + 30 + radarOffset
 
-    if direction == 'left':
+    if direction == 'right':
         return dangerBounds[1] - leftPlayerBoundary
     else:
         return rightPlayerBoundary - dangerBounds[0]
