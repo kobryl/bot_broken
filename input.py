@@ -10,7 +10,7 @@ pyautogui.PAUSE = 0
 
 # Function prepares the game's windows with appropriate commands (fullscreen, reset zoom, refresh)
 def initWindow():
-    focusTimer(5)
+    focusTimer(10)
 
     # fullscreen
     pyautogui.keyDown('f11')
