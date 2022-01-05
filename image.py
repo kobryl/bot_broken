@@ -99,8 +99,8 @@ def radar(playerPos, tl, br):
 # Return: Maximum safe move value in given direction
 def checkSides(direction, playerPos, tl, br):
     collision = []
-    radarWidth = 180
-    radarHeight = 130
+    radarWidth = 200
+    radarHeight = 170
     if direction == 'left':
         if wallDetection(playerPos[0], tl, br) == 'left':
             return 0
@@ -119,8 +119,6 @@ def checkSides(direction, playerPos, tl, br):
         regionX = playerPos[0] + 28
         if regionX + radarWidth > br[0]:
             radarWidth = br[0] - regionX
-        else:
-            radarWidth = 180
         if playerPos[1] - 110 < tl[1]:
             regionY = tl[1]
         else:
