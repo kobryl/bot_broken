@@ -64,3 +64,10 @@ def locatePlayer(topLeft, bottomRight):
     except TypeError:
         return None'''
 
+
+def radar(playerPos):
+    region = (playerPos['x'] - 10, playerPos['y'] - 300, 70, 300)
+    scr = pyautogui.screenshot('sceren.png', region=region)
+    for y in range(playerPos['y'] - 300, playerPos['y']):
+        for x in range(playerPos['x'] - 10, playerPos['x'] + 70):
+            continue
