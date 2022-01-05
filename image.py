@@ -72,8 +72,35 @@ def radar(playerPos, tl, br):
 
 # Sprawdza, o ile można się przemieścić w danym kierunku
 def checkSides(direction, playerPos, tl, br):
-    safe = True
-    x1 = playerPos[0] - 30
-    regionl = (playerPos[0] - 30 - 180, playerPos[1] - 110, 180, 130)
-    regionr = (playerPos[0] + 30, playerPos[1] - 110, 180, 130)
-    return safe
+    collision = []
+    radarWidth = 180
+    radarHeight = 130
+    if direction == 'left:':
+        if playerPos[0] - 30 - radarWidth < tl[0]:
+            regionX = tl[0]
+        else:
+            regionX = playerPos[0] - 30 - radarWidth
+        if playerPos[1] - 110 > tl[1]:
+            regionY = tl[1]
+        else:
+            regionY = playerPos[1] - 110
+        region = (regionX, regionY, radarWidth, radarHeight)
+    else:
+        regionX = playerPos[0] + 30
+        if playerPos[0] + 30 + radarWidth > br[0]:
+            radarWidth = br[0] - (playerPos[0] + 30)
+        else:
+            radarWidth = 180
+        if playerPos[1] - 110 > tl[1]:
+            regionY = tl[1]
+        else:
+            regionY = playerPos[1] - 110
+        region = (regionX, regionY, radarWidth, radarHeight)
+    collision.append(radarWidth)
+    scr = pyautogui.screenshot('sceren2.png', region=region)
+    for y in range(radarHeight):
+        for x in range(radarWidth):
+            pix = scr.getpixel((x, y))
+            if not (pix[0] == pix[1] and pix[0] == pix[2]):
+                collision.append(abs(playerPos[0] - x) - 1)
+    return min(collision)
