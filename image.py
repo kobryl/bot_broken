@@ -104,3 +104,9 @@ def checkSides(direction, playerPos, tl, br):
             if not (pix[0] == pix[1] and pix[0] == pix[2]):
                 collision.append(abs(playerPos[0] - x) - 1)
     return min(collision)
+
+
+def wallDetection(playerPos, tl, br):
+    if playerPos[0] - 30 <= tl.x or playerPos[0] + 30 >= br.x:
+        return True
+    return False
