@@ -1,8 +1,7 @@
 import cv2
 import numpy as np
 import PIL
-from time import sleep
-from time import time
+from time import sleep, time
 import pyautogui
 # todo: wywalić niepotrzebne
 
@@ -27,7 +26,7 @@ def main():
         #        if bulletInRange(bullet, playerPos):
 
         sleep(interval)
-        
+
     pyautogui.keyUp('space')
 
     print('Koniec programu')
