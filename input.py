@@ -8,7 +8,7 @@ speed = 8
 pyautogui.PAUSE = 0
 
 
-# Przygotowuje okno do operacji programu - pełny ekran, reset przybliżenia oraz odświeżenie
+# Function prepares the game's windows with appropriate commands (fullscreen, reset zoom, refresh)
 def initWindow():
     focusTimer(5)
 
@@ -29,7 +29,9 @@ def initWindow():
     sleep(0.3)
 
 
-# Czeka 'n' sekund na przejście użytkownika do okna z grą
+# Function waits a given amount of seconds for the user to focus on the game's window
+# Parameters:
+#   n: Number of seconds to wait
 def focusTimer(n):
     print('Przejdź do okna przeglądarki. Skrypt rozpocznie pracę za:')
     for i in range(n, 0, -1):
@@ -37,7 +39,10 @@ def focusTimer(n):
         sleep(1)
 
 
-# Rusza graczem o 'x' pikseli w podanym kierunku ('left'/'right')
+# Function moves the player a given amount of pixels in a given direction
+# Parameters:
+#   x: Number of pixels to move
+#   direction: 'left' or 'right'
 def move(x, direction):
     pyautogui.keyDown(direction)
     sleep(interval * (x / speed))
